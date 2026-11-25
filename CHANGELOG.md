@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/OneLiteFeatherNET/pavo/compare/v0.2.0...v0.3.0) (2026-11-25)
+
+
+### Features
+
+* **components:** let apps control data table sorting, paging and rows ([#19](https://github.com/OneLiteFeatherNET/pavo/issues/19)) ([7f0157a](https://github.com/OneLiteFeatherNET/pavo/commit/7f0157ac3fe3feb61764d1a9db2953febcc2cb0b))
+
+
+### Bug Fixes
+
+* **components:** show the placeholder that apps pass to a text field ([#18](https://github.com/OneLiteFeatherNET/pavo/issues/18)) ([4096dd2](https://github.com/OneLiteFeatherNET/pavo/commit/4096dd249fc3ee166406290fdb694d9a835ba01c))
+
 ## [0.2.0](https://github.com/OneLiteFeatherNET/pavo/compare/v0.1.0...v0.2.0) (2026-11-25)
 
 
