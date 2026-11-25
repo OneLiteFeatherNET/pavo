@@ -58,8 +58,7 @@
   "packages": {
     ".": {
       "package-name": "@onelitefeathernet/pavo",
-      "changelog-path": "CHANGELOG.md",
-      "release-as": "0.1.0"
+      "changelog-path": "CHANGELOG.md"
     }
   },
   "bump-minor-pre-major": true
