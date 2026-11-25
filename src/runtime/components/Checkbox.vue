@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <label :class="['inline-flex min-h-10 items-center gap-2 text-body-large', disabled ? 'text-on-surface/38' : 'text-on-surface']">
     <span class="state-layer inline-flex size-10 items-center justify-center rounded-full text-primary">

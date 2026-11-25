@@ -29,6 +29,11 @@ describe('M3Combobox', () => {
     expect(w.emitted('update:modelValue')?.[0]).toEqual([['berlin']])
   })
 
+  it('names the remove buttons with the built-in German remove text when removeLabel is empty', () => {
+    const w = mount(M3Combobox, { props: { modelValue: ['berlin'], label: 'Tags' } })
+    expect(w.get('button').attributes('aria-label')).toBe('Entfernen berlin')
+  })
+
   it('gives each remove button an accessible name with the value', () => {
     const w = mount(M3Combobox, { props: { modelValue: ['berlin'], label: 'Tags', removeLabel: 'Remove' } })
     expect(w.get('button').attributes('aria-label')).toBe('Remove berlin')

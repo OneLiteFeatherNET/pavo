@@ -1,5 +1,5 @@
 <template>
-  <div role="status" class="flex flex-col items-center gap-2 px-4 py-10 text-center text-on-surface-variant">
+  <div class="flex flex-col items-center gap-2 px-4 py-10 text-center text-on-surface-variant">
     <M3Icon v-if="icon" :name="icon" :size="40" />
     <p class="text-title-medium text-on-surface">{{ title }}</p>
     <p v-if="$slots.default" class="text-body-medium"><slot /></p>
@@ -9,6 +9,6 @@
 <script setup lang="ts">
 import M3Icon from './Icon.vue'
 
-/** "Nothing here yet": a title, an optional icon and an optional description slot. Announced as a status. */
+/** "Nothing here yet": a title, an optional icon and an optional description slot. Not a live region: it is rendered on page load. */
 withDefaults(defineProps<{ title: string, icon?: string }>(), { icon: 'mdi-tray-full' })
 </script>

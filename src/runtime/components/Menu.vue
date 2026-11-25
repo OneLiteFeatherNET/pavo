@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div ref="root" class="relative inline-block" @keydown.esc.stop="close(true)" @focusout="onFocusOut">
     <slot name="activator" :props="activatorProps" :open="open" :toggle="toggle" />

@@ -25,6 +25,11 @@ describe('M3TextField', () => {
     expect(field().get('input').attributes('aria-invalid')).toBeUndefined()
   })
 
+  it('names the clear button with the built-in German clear text when clearLabel is empty', () => {
+    const w = field({ clearable: true, modelValue: 'abc' })
+    expect(w.get('button').attributes('aria-label')).toBe('Leeren')
+  })
+
   it('emits the typed value', async () => {
     const w = field()
     await w.get('input').setValue('abc')

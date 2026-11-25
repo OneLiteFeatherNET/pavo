@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <M3FieldFrame :class="$attrs.class as string" :style="$attrs.style as string" :for-id="id" :label="label" :error="error" :hint="hint" :required="required" :disabled="disabled" floated>
     <select

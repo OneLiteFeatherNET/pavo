@@ -17,6 +17,11 @@ describe('tones', () => {
     expect(iconPath(icon), `icon ${icon} of ${tone}`).not.toBe('')
   })
 
+  it('maps the secondary and tertiary tones to their container roles', () => {
+    expect(TONE_CLASSES.secondary).toBe('bg-secondary-container text-on-secondary-container')
+    expect(TONE_CLASSES.tertiary).toBe('bg-tertiary-container text-on-tertiary-container')
+  })
+
   it('uses no icon for the neutral and primary tones', () => {
     expect(TONE_ICONS.neutral).toBe('')
     expect(TONE_ICONS.primary).toBe('')

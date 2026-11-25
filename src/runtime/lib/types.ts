@@ -1,5 +1,5 @@
 /** Semantic status colour of a component. Maps to the container roles of the theme (see tones.ts). */
-export type Tone = 'neutral' | 'primary' | 'success' | 'warning' | 'error' | 'info'
+export type Tone = 'neutral' | 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'error' | 'info'
 
 /** One entry of a navigation drawer or bar. `to` is an app path (or URL) the link component navigates to. */
 export interface NavEntry {

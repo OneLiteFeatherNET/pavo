@@ -1,6 +1,8 @@
 {
   "pavo": {
     "close": "Close",
+    "clear": "Clear",
+    "remove": "Remove",
     "menu": "Menu",
     "navigation": "Navigation",
     "skipToContent": "Skip to content",
@@ -16,6 +18,7 @@
       "title": "Something went wrong"
     },
     "table": {
+      "select": "Select",
       "sortAscending": "Sort ascending",
       "sortDescending": "Sort descending",
       "rowsPerPage": "Rows per page",

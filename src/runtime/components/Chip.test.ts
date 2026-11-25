@@ -10,9 +10,16 @@ describe('M3Chip', () => {
     w.unmount()
   })
 
-  it('names the remove button by the built-in close text when removeLabel is empty', () => {
+  it('names the remove button by the built-in German remove text when removeLabel is empty', () => {
     const w = mount(M3Chip, { props: { removable: true }, slots: { default: 'rust' } })
-    expect(w.get('button').attributes('aria-label')).toBe('Schließen')
+    expect(w.get('button').attributes('aria-label')).toBe('Entfernen')
+    w.unmount()
+  })
+
+  it('renders the secondary tone with the secondary container colours', () => {
+    const w = mount(M3Chip, { props: { tone: 'secondary' }, slots: { default: 'rust' } })
+    expect(w.classes()).toContain('bg-secondary-container')
+    expect(w.classes()).toContain('text-on-secondary-container')
     w.unmount()
   })
 
