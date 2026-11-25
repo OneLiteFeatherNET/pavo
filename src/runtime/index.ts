@@ -24,4 +24,10 @@ export {
 export type { ProblemDetails, ProblemError, TransportData, TransportError } from './lib/problem'
 export type { NavEntry, Tone } from './lib/types'
 
-// components
+// Components: actions and feedback (Button, Card, Chip, Dialog, ...)
+
+// Components: form fields and menus (TextField, Select, Switch, Menu, ...)
+
+// Components: navigation and data (NavDrawer, NavItem, TopAppBar, DataTable)
+
+// Components: layout (AppFrame, PageHeader, Problem, ConfirmDialog, StatusChip)
