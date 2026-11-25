@@ -28,6 +28,12 @@ export type { NavEntry, Tone } from './lib/types'
 
 // Components: form fields and menus (TextField, Select, Switch, Menu, ...)
 
-// Components: navigation and data (NavDrawer, NavItem, TopAppBar, DataTable)
+// Components: navigation and data
+export { default as M3DataTable } from './components/DataTable.vue'
+export { default as M3NavDrawer } from './components/NavDrawer.vue'
+export { default as M3NavItem } from './components/NavItem.vue'
+export { default as M3TopAppBar } from './components/TopAppBar.vue'
+export type { Column as DataTableColumn } from './components/DataTable.vue'
+export type { TableLabels } from './lib/table-labels'
 
 // Components: layout (AppFrame, PageHeader, Problem, ConfirmDialog, StatusChip)
