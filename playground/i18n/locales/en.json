@@ -1,0 +1,8 @@
+{
+  "playground": {
+    "title": "Pavo playground",
+    "intro": "The Pavo components are built here. This page checks the module, the tokens and the theme.",
+    "toLight": "Light theme",
+    "toDark": "Dark theme"
+  }
+}
