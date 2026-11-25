@@ -23,6 +23,9 @@ const columns = [
   { key: 'joined', title: 'Joined' },
 ]
 
+const topPlayers = computed(() => players.slice(0, 5))
+const topRowAttrs = (p: Player) => ({ 'data-test': `top-${p.id}`, class: p.points > 500 ? 'font-bold' : '' })
+
 const ranks = ['Owner', 'Admin', 'Moderator', 'Member']
 const players: Player[] = Array.from({ length: 25 }, (_, i) => ({
   id: `player-${i + 1}`,
@@ -57,6 +60,14 @@ const players: Player[] = Array.from({ length: 25 }, (_, i) => ({
         </div>
 
         <M3DataTable :columns="columns" :items="players" row-key="id" />
+        <h2 class="text-title-large">Top players without paging</h2>
+        <M3DataTable
+          :columns="columns"
+          :items="topPlayers"
+          row-key="id"
+          :paginate="false"
+          :row-attrs="topRowAttrs"
+        />
       </div>
     </div>
 

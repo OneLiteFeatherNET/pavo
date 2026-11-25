@@ -29,7 +29,7 @@
                   aria-hidden="true"
                   class="size-4 fill-current"
                 >
-                  <path :d="iconPath(sortDesc ? 'mdi-arrow-down' : 'mdi-arrow-up')" />
+                  <path :d="iconPath(sortDescending ? 'mdi-arrow-down' : 'mdi-arrow-up')" />
                 </svg>
               </button>
               <template v-else>{{ c.title }}</template>
@@ -40,6 +40,7 @@
           <tr
             v-for="row in pageRows"
             :key="String(val(row, rowKey))"
+            v-bind="rowAttrs ? rowAttrs(row) : {}"
             class="border-t border-outline-variant hover:bg-on-surface/8"
           >
             <td v-if="selectable" class="w-12 px-2">
@@ -66,7 +67,7 @@
       </p>
     </div>
     <div
-      v-if="items.length > PAGE_SIZES[0]!"
+      v-if="paginate && items.length > pageSizes[0]!"
       class="flex flex-wrap items-center justify-end gap-x-6 gap-y-1 border-t border-outline-variant px-4 py-1 text-body-small text-on-surface-variant"
     >
       <label class="flex items-center gap-2">
@@ -75,7 +76,7 @@
           v-model.number="pageSize"
           class="h-8 rounded-xs border border-outline-variant bg-transparent px-1 text-body-small text-on-surface"
         >
-          <option v-for="n in PAGE_SIZES" :key="n" :value="n" class="bg-surface-container-high">{{ n }}</option>
+          <option v-for="n in pageSizes" :key="n" :value="n" class="bg-surface-container-high">{{ n }}</option>
         </select>
       </label>
       <span aria-live="polite">{{ rangeText }}</span>
@@ -108,23 +109,40 @@
 </template>
 
 <script setup lang="ts" generic="T extends object">
+/**
+ * Table for lists of objects with sorting, paging and row selection.
+ *
+ * Cell slots: a column renders its cell through the slot `item.<key>`, where `<key>` is the column key.
+ * The slot receives `{ item, value }`; without the slot the raw value is shown.
+ *
+ * Sorting is internal by default. Pass `sortBy` (and `sortDesc`) to control it with
+ * `v-model:sort-by` / `v-model:sort-desc`; the table then only emits on header clicks.
+ * An empty `sortBy` means unsorted. `serverSort` keeps the given order (the parent sorts),
+ * but aria-sort and the emits still work. A column's `sortValue` replaces `row[key]` for ordering.
+ *
+ * Paging: `paginate` (default true) and `pageSizes` (default 10, 25, 50, 100).
+ * Without paging every row is rendered and no footer is shown.
+ *
+ * `rowAttrs` adds attributes or classes to each body row, e.g. `data-test`.
+ */
 import { computed, ref, watch } from 'vue'
 import { usePavoText } from '../composables/usePavoText'
 import { iconPath } from '../lib/icons'
 import type { TableLabels } from '../lib/table-labels'
 
-export interface Column {
+export interface Column<R extends object = object> {
   key: string
   title: string
   align?: 'start' | 'end'
   /** Defaults to true; the actions column sets false. */
   sortable?: boolean
+  /** Value used for ordering instead of `row[key]`, e.g. `(row) => Date.now() - row.createdAt`. */
+  sortValue?: (row: R) => unknown
 }
-const PAGE_SIZES = [10, 25, 50, 100]
 const val = (row: object, key: string): unknown => (row as Record<string, unknown>)[key]
 
 const props = withDefaults(defineProps<{
-  columns: readonly Column[]
+  columns: readonly Column<T>[]
   items: readonly T[]
   rowKey?: string
   loading?: boolean
@@ -132,8 +150,33 @@ const props = withDefaults(defineProps<{
   labels?: Partial<TableLabels>
   selectable?: boolean
   selected?: readonly T[]
-}>(), { rowKey: 'id', loading: false, labels: () => ({}), selectable: false, selected: () => [] })
-const emit = defineEmits<{ 'update:selected': [T[]] }>()
+  /** Controlled sort column key; an empty string means unsorted. Omit to let the table sort itself. */
+  sortBy?: string
+  /** Controlled sort direction, used together with `sortBy`. */
+  sortDesc?: boolean
+  /** The parent delivers the items already sorted; the table does not reorder them. */
+  serverSort?: boolean
+  pageSizes?: readonly number[]
+  paginate?: boolean
+  /** Attributes or classes for each body row. */
+  rowAttrs?: (row: T) => Record<string, unknown>
+}>(), {
+  rowKey: 'id',
+  loading: false,
+  labels: () => ({}),
+  selectable: false,
+  selected: () => [],
+  sortBy: undefined,
+  serverSort: false,
+  pageSizes: () => [10, 25, 50, 100],
+  paginate: true,
+  rowAttrs: undefined,
+})
+const emit = defineEmits<{
+  'update:selected': [T[]]
+  'update:sortBy': [string]
+  'update:sortDesc': [boolean]
+}>()
 
 const t = usePavoText()
 const defaults = computed<TableLabels>(() => ({
@@ -152,31 +195,42 @@ const text = computed<TableLabels>(() => {
   return { ...defaults.value, ...overrides }
 })
 
-const sortKey = ref('')
-const sortDesc = ref(false)
+const internalKey = ref('')
+const internalDesc = ref(false)
+const controlled = computed(() => props.sortBy !== undefined)
+const sortKey = computed(() => (controlled.value ? props.sortBy ?? '' : internalKey.value))
+const sortDescending = computed(() => (controlled.value ? props.sortDesc === true : internalDesc.value))
 const page = ref(0)
-const pageSize = ref(PAGE_SIZES[0]!)
+const pageSize = ref(props.pageSizes[0]!)
 
 function toggleSort(key: string) {
+  let nextKey = sortKey.value
+  let nextDesc = sortDescending.value
   if (sortKey.value !== key) {
-    sortKey.value = key
-    sortDesc.value = false
+    nextKey = key
+    nextDesc = false
   }
-  else if (!sortDesc.value) {
-    sortDesc.value = true
+  else if (!nextDesc) {
+    nextDesc = true
   }
   else {
-    sortKey.value = ''
-    sortDesc.value = false
+    nextKey = ''
+    nextDesc = false
   }
+  if (!controlled.value) {
+    internalKey.value = nextKey
+    internalDesc.value = nextDesc
+  }
+  emit('update:sortBy', nextKey)
+  emit('update:sortDesc', nextDesc)
 }
 // The next click on a column sorts it the other way round, so the button label names that direction.
 function nextSortText(key: string): string {
-  return sortKey.value === key && !sortDesc.value ? text.value.sortDescending : text.value.sortAscending
+  return sortKey.value === key && !sortDescending.value ? text.value.sortDescending : text.value.sortAscending
 }
-function ariaSort(c: Column): 'ascending' | 'descending' | 'none' | undefined {
+function ariaSort(c: Column<T>): 'ascending' | 'descending' | 'none' | undefined {
   if (c.sortable === false || !c.title) return undefined
-  return sortKey.value === c.key ? (sortDesc.value ? 'descending' : 'ascending') : 'none'
+  return sortKey.value === c.key ? (sortDescending.value ? 'descending' : 'ascending') : 'none'
 }
 
 function compare(a: unknown, b: unknown): number {
@@ -187,15 +241,19 @@ function compare(a: unknown, b: unknown): number {
   return String(a).localeCompare(String(b), undefined, { numeric: true })
 }
 const sorted = computed(() => {
-  if (!sortKey.value) return [...props.items]
+  if (props.serverSort || !sortKey.value) return [...props.items]
   const k = sortKey.value
-  const dir = sortDesc.value ? -1 : 1
-  return [...props.items].sort((x, y) => dir * compare(val(x, k), val(y, k)))
+  const column = props.columns.find(c => c.key === k)
+  const read = (row: T) => (column?.sortValue ? column.sortValue(row) : val(row, k))
+  const dir = sortDescending.value ? -1 : 1
+  return [...props.items].sort((x, y) => dir * compare(read(x), read(y)))
 })
 
 const from = computed(() => (sorted.value.length ? page.value * pageSize.value + 1 : 0))
 const to = computed(() => Math.min(sorted.value.length, (page.value + 1) * pageSize.value))
-const pageRows = computed(() => sorted.value.slice(page.value * pageSize.value, (page.value + 1) * pageSize.value))
+const pageRows = computed(() => (props.paginate
+  ? sorted.value.slice(page.value * pageSize.value, (page.value + 1) * pageSize.value)
+  : sorted.value))
 const rangeText = computed(() => text.value.range
   .replace('{from}', String(from.value))
   .replace('{to}', String(to.value))

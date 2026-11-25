@@ -122,3 +122,59 @@ describe('M3DataTable', () => {
     expect(w.text()).toContain('Noch nichts vorhanden')
   })
 })
+
+describe('M3DataTable sorting, paging and rows', () => {
+  const many = Array.from({ length: 25 }, (_, i) => ({ id: `r${i}`, name: `n${i}`, size: i }))
+
+  it('shows the aria-sort state given by the sortBy and sortDesc props', () => {
+    const w = table({ sortBy: 'name', sortDesc: true, items: items.slice(0, 3) })
+    expect(w.findAll('th')[0]!.attributes('aria-sort')).toBe('descending')
+  })
+
+  it('sorts the rows by the sortBy prop when serverSort is not set', () => {
+    const w = table({ sortBy: 'name', sortDesc: false, items: items.slice(0, 3) })
+    expect(names(w)).toEqual(['n20', 'n21', 'n22'])
+  })
+
+  it('emits the next sort state on a header click when sorting is controlled', async () => {
+    const w = table({ sortBy: 'name', sortDesc: false, items: items.slice(0, 3) })
+    await sortButton(w).trigger('click')
+    expect(w.emitted('update:sortBy')?.[0]).toEqual(['name'])
+    expect(w.emitted('update:sortDesc')?.[0]).toEqual([true])
+  })
+
+  it('keeps the parent order on a header click when serverSort is set', async () => {
+    const w = table({ sortBy: 'name', sortDesc: false, serverSort: true, items: items.slice(0, 3) })
+    await sortButton(w).trigger('click')
+    expect(names(w)).toEqual(['n22', 'n21', 'n20'])
+  })
+
+  it('orders the rows by the column sortValue instead of the row value', async () => {
+    const columnsByCreated = [{ key: 'label', title: 'Label', sortValue: (row: object) => (row as { created: number }).created }]
+    const rows = [{ id: 'a', label: 'b', created: 1 }, { id: 'b', label: 'a', created: 2 }]
+    const w = mount(M3DataTable, { props: { columns: columnsByCreated, items: rows, labels } })
+    await sortButton(w).trigger('click')
+    expect(names(w)).toEqual(['b', 'a'])
+  })
+
+  it('shows all rows when paging is off', () => {
+    const w = table({ items: many, paginate: false })
+    expect(w.findAll('tbody tr')).toHaveLength(25)
+  })
+
+  it('hides the pagination footer when paging is off', () => {
+    const w = table({ items: many, paginate: false })
+    expect(w.find('select').exists()).toBe(false)
+    expect(w.find('button[aria-label="Next page"]').exists()).toBe(false)
+  })
+
+  it('offers the configured page sizes', () => {
+    const w = table({ pageSizes: [5, 15] })
+    expect(w.findAll('option').map(o => o.text())).toEqual(['5', '15'])
+  })
+
+  it('puts the rowAttrs attributes on every body row', () => {
+    const w = table({ paginate: false, rowAttrs: (row: object) => ({ 'data-test': `row-${(row as { id: string }).id}` }) })
+    expect(w.findAll('tbody tr').map(r => r.attributes('data-test'))).toEqual(items.map(r => `row-${r.id}`))
+  })
+})
