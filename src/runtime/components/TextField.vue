@@ -88,7 +88,7 @@ const props = withDefaults(defineProps<{
   required?: boolean
   disabled?: boolean
   clearable?: boolean
-  /** Accessible name of the clear button; empty falls back to the built-in "close" text. */
+  /** Accessible name of the clear button; empty falls back to the built-in "clear" text. */
   clearLabel?: string
   /** Icon name from the icon registry, shown at the start of the field. */
   leadingIcon?: string
@@ -100,7 +100,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{ 'update:modelValue': [string | number] }>()
 
 const t = usePavoText()
-const clearText = computed(() => props.clearLabel || t('close'))
+const clearText = computed(() => props.clearLabel || t('clear'))
 const id = useId()
 // Date and time inputs show a format placeholder, so their label never rests inside the box.
 const alwaysFloated = computed(() => ['date', 'datetime-local', 'time', 'month', 'week'].includes(props.type))

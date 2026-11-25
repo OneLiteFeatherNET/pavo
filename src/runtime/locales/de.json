@@ -1,6 +1,8 @@
 {
   "pavo": {
     "close": "Schließen",
+    "clear": "Leeren",
+    "remove": "Entfernen",
     "menu": "Menü",
     "navigation": "Navigation",
     "skipToContent": "Zum Inhalt springen",
@@ -16,6 +18,7 @@
       "title": "Etwas ist schiefgelaufen"
     },
     "table": {
+      "select": "Auswählen",
       "sortAscending": "Aufsteigend sortieren",
       "sortDescending": "Absteigend sortieren",
       "rowsPerPage": "Zeilen pro Seite",

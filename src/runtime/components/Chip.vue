@@ -16,7 +16,7 @@
       v-if="removable"
       type="button"
       class="state-layer -mr-1 inline-flex size-5 items-center justify-center rounded-full"
-      :aria-label="removeLabel || t('close')"
+      :aria-label="removeLabel || t('remove')"
       @click.stop.prevent="emit('remove')"
     >
       <M3Icon name="mdi-close" :size="14" />
@@ -34,13 +34,13 @@ import M3Icon from './Icon.vue'
 defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<{
-  tone?: 'neutral' | 'primary' | 'success' | 'warning' | 'error' | 'info'
+  tone?: Tone
   icon?: string
   small?: boolean
   to?: string | Record<string, unknown>
   href?: string
   removable?: boolean
-  /** Accessible name of the remove button. Empty falls back to the built-in close text. */
+  /** Accessible name of the remove button. Empty falls back to the built-in "remove" text. */
   removeLabel?: string
 }>(), { tone: 'neutral', icon: undefined, to: undefined, href: undefined, removeLabel: '' })
 const emit = defineEmits<{ remove: [] }>()
@@ -59,6 +59,8 @@ const linkHref = computed(() => {
 const TONES: Record<Tone, string> = {
   neutral: 'border border-outline-variant text-on-surface-variant',
   primary: 'bg-primary-container text-on-primary-container',
+  secondary: 'bg-secondary-container text-on-secondary-container',
+  tertiary: 'bg-tertiary-container text-on-tertiary-container',
   success: 'bg-success-container text-on-success-container',
   warning: 'bg-warning-container text-on-warning-container',
   error: 'bg-error-container text-on-error-container',

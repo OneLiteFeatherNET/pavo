@@ -112,6 +112,11 @@ describe('M3DataTable', () => {
     expect(w.emitted('update:selected')?.[0]).toEqual([[items[1]]])
   })
 
+  it('names the row selection checkbox with the built-in German select text when no label is given', () => {
+    const w = mount(M3DataTable, { props: { columns, items: items.slice(0, 1), selectable: true } })
+    expect(w.get('tbody input[type=checkbox]').attributes('aria-label')).toBe('Auswählen')
+  })
+
   it('uses the built-in German texts when no label is given', () => {
     const w = mount(M3DataTable, { props: { columns, items: [] } })
     expect(w.text()).toContain('Noch nichts vorhanden')

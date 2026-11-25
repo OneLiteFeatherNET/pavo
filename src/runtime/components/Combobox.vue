@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <M3FieldFrame :for-id="id" :label="label" :hint="hint" floated>
     <div
@@ -47,13 +46,13 @@ const props = withDefaults(defineProps<{
   modelValue: readonly string[]
   label: string
   hint?: string
-  /** Accessible name prefix of the chip remove buttons; empty falls back to the built-in "close" text. */
+  /** Accessible name prefix of the chip remove buttons; empty falls back to the built-in "remove" text. */
   removeLabel?: string
 }>(), { hint: '', removeLabel: '' })
 const emit = defineEmits<{ 'update:modelValue': [string[]] }>()
 
 const t = usePavoText()
-const removeText = computed(() => props.removeLabel || t('close'))
+const removeText = computed(() => props.removeLabel || t('remove'))
 const id = useId()
 const input = ref<HTMLInputElement>()
 const draft = ref('')

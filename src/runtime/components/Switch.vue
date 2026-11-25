@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <label :class="['inline-flex min-h-10 items-center gap-3 text-body-large', disabled ? 'text-on-surface/38' : 'text-on-surface']">
     <button
