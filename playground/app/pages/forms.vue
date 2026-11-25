@@ -18,7 +18,7 @@ const cities = [
 </script>
 
 <template>
-  <main class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-4 py-12">
+  <div class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-4 py-12">
     <h1 class="text-display-small text-on-surface">Form fields and menus</h1>
 
     <section class="flex flex-col gap-4">
@@ -83,5 +83,5 @@ const cities = [
       </M3Menu>
       <p class="text-body-medium text-on-surface-variant">Last action: {{ lastMenuAction }}</p>
     </section>
-  </main>
+  </div>
 </template>

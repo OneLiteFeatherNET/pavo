@@ -57,3 +57,8 @@ export type { Column as DataTableColumn } from './components/DataTable.vue'
 export type { TableLabels } from './lib/table-labels'
 
 // Components: layout (AppFrame, PageHeader, Problem, ConfirmDialog, StatusChip)
+export { default as M3AppFrame } from './components/AppFrame.vue'
+export { default as M3ConfirmDialog } from './components/ConfirmDialog.vue'
+export { default as M3PageHeader } from './components/PageHeader.vue'
+export { default as M3Problem } from './components/Problem.vue'
+export { default as M3StatusChip } from './components/StatusChip.vue'
