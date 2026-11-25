@@ -3,6 +3,7 @@ import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { addComponentsDir, addImports, addPlugin, createResolver, defineNuxtModule, resolvePath } from '@nuxt/kit'
 import type { NuxtModule } from '@nuxt/schema'
+import { localeFile } from './locale-files'
 
 export interface ModuleOptions {
   /** Prefix of every component: `M3` gives M3Button, M3AppFrame, ... */
@@ -56,11 +57,12 @@ const pavoModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
     type RegisterModule = (options: { langDir: string, locales: { code: string, file: string }[] }) => void
     const hookI18n = nuxt.hook.bind(nuxt) as unknown as (name: string, fn: (register: RegisterModule) => void) => void
     hookI18n('i18n:registerModule', (register) => {
+      const langDir = runtime('locales')
       register({
-        langDir: runtime('locales'),
+        langDir,
         locales: [
-          { code: 'de', file: 'de.ts' },
-          { code: 'en', file: 'en.ts' },
+          { code: 'de', file: localeFile(langDir, 'de') },
+          { code: 'en', file: localeFile(langDir, 'en') },
         ],
       })
     })
