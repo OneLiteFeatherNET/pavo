@@ -25,6 +25,16 @@ export type { ProblemDetails, ProblemError, TransportData, TransportError } from
 export type { NavEntry, Tone } from './lib/types'
 
 // Components: actions and feedback (Button, Card, Chip, Dialog, ...)
+export { default as M3Alert } from './components/Alert.vue'
+export { default as M3Button } from './components/Button.vue'
+export { default as M3Card } from './components/Card.vue'
+export { default as M3Chip } from './components/Chip.vue'
+export { default as M3Dialog } from './components/Dialog.vue'
+export { default as M3EmptyState } from './components/EmptyState.vue'
+export { default as M3Icon } from './components/Icon.vue'
+export { default as M3IconButton } from './components/IconButton.vue'
+export { default as M3Progress } from './components/Progress.vue'
+export { default as M3Snackbar } from './components/Snackbar.vue'
 
 // Components: form fields and menus (TextField, Select, Switch, Menu, ...)
 export { default as M3TextField } from './components/TextField.vue'
