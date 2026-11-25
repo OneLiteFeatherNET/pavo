@@ -25,6 +25,10 @@
       "types": "./dist/runtime/index.d.ts",
       "import": "./dist/runtime/index.js"
     },
+    "./problem": {
+      "types": "./dist/runtime/lib/problem.d.ts",
+      "import": "./dist/runtime/lib/problem.js"
+    },
     "./css": "./dist/runtime/css/index.css",
     "./css/theme": "./dist/runtime/css/theme.css",
     "./css/tokens": "./dist/runtime/css/tokens.css",

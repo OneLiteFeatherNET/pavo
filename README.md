@@ -71,6 +71,13 @@ import { useColorTheme, useSnackbar } from '@onelitefeathernet/pavo/vue'
 Import the CSS the same way as above (`@onelitefeathernet/pavo/css`). Your bundler must handle `.vue` files from the
 package, because the entry re-exports the components as single-file components.
 
+Code that only needs the RFC 9457 error helpers (for example an API client or its tests) can import them without
+the components:
+
+```ts
+import { toClientError } from '@onelitefeathernet/pavo/problem'
+```
+
 ## Development
 
 ```sh
