@@ -10,7 +10,7 @@ export { usePavoText } from './composables/usePavoText'
 
 // Helpers
 export { iconPath, registerIcons } from './lib/icons'
-export { useLinkComponent } from './lib/link'
+export { PAVO_LINK, useLinkComponent } from './lib/link'
 export { parseTheme, resolveTheme, THEME_KEY } from './lib/theme'
 export type { ThemeName } from './lib/theme'
 export { TONE_CLASSES, TONE_ICONS, TONE_SOLID_CLASSES } from './lib/tones'
