@@ -9,7 +9,7 @@
     :counter="counterText"
     :required="required"
     :disabled="disabled"
-    :floated="alwaysFloated"
+    :floated="alwaysFloated || !!consumerPlaceholder()"
     :leading="!!leadingIcon"
   >
     <component
@@ -21,7 +21,7 @@
       :rows="multiline ? rows : undefined"
       :required="required"
       :disabled="disabled"
-      placeholder=" "
+      :placeholder="consumerPlaceholder() || ' '"
       :aria-invalid="error ? 'true' : undefined"
       :aria-describedby="error || hint || counterText ? `${id}-support` : undefined"
       :class="[
@@ -72,6 +72,10 @@ const attrs = useAttrs()
 function inputAttrs() {
   const { class: _c, style: _s, ...rest } = attrs
   return rest
+}
+// A placeholder the app passes is shown on the control; the label then rests above the box so the two never overlap.
+function consumerPlaceholder(): string {
+  return typeof attrs.placeholder === 'string' ? attrs.placeholder : ''
 }
 
 const props = withDefaults(defineProps<{
