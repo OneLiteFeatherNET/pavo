@@ -7,7 +7,7 @@ const progress = ref(40)
 </script>
 
 <template>
-  <main class="mx-auto flex max-w-3xl flex-col gap-10 px-4 py-12">
+  <div class="mx-auto flex max-w-3xl flex-col gap-10 px-4 py-12">
     <h1 class="text-display-small text-on-surface">
       Actions and feedback
     </h1>
@@ -237,5 +237,5 @@ const progress = ref(40)
         </template>
       </M3Dialog>
     </section>
-  </main>
+  </div>
 </template>
