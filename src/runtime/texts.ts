@@ -1,0 +1,66 @@
+// Built-in texts of Pavo. Kept outside the i18n langDir (src/runtime/locales): @nuxtjs/i18n precompiles those
+// files into message functions, which would leave the client dictionary of usePavoText empty.
+export const PAVO_TEXTS = {
+  de: {
+    pavo: {
+      close: 'Schließen',
+      clear: 'Leeren',
+      remove: 'Entfernen',
+      menu: 'Menü',
+      navigation: 'Navigation',
+      skipToContent: 'Zum Inhalt springen',
+      lightTheme: 'Helles Design',
+      darkTheme: 'Dunkles Design',
+      language: 'Sprache wechseln',
+      cancel: 'Abbrechen',
+      confirm: 'Bestätigen',
+      retry: 'Erneut versuchen',
+      loading: 'Lädt',
+      noData: 'Noch nichts vorhanden',
+      problem: {
+        network: 'Keine Verbindung zur API',
+        title: 'Etwas ist schiefgelaufen',
+      },
+      table: {
+        select: 'Auswählen',
+        sortAscending: 'Aufsteigend sortieren',
+        sortDescending: 'Absteigend sortieren',
+        rowsPerPage: 'Zeilen pro Seite',
+        previousPage: 'Vorherige Seite',
+        nextPage: 'Nächste Seite',
+        range: '{from}–{to} von {total}',
+      },
+    },
+  },
+  en: {
+    pavo: {
+      close: 'Close',
+      clear: 'Clear',
+      remove: 'Remove',
+      menu: 'Menu',
+      navigation: 'Navigation',
+      skipToContent: 'Skip to content',
+      lightTheme: 'Light theme',
+      darkTheme: 'Dark theme',
+      language: 'Switch language',
+      cancel: 'Cancel',
+      confirm: 'Confirm',
+      retry: 'Try again',
+      loading: 'Loading',
+      noData: 'Nothing here yet',
+      problem: {
+        network: 'No connection to the API',
+        title: 'Something went wrong',
+      },
+      table: {
+        select: 'Select',
+        sortAscending: 'Sort ascending',
+        sortDescending: 'Sort descending',
+        rowsPerPage: 'Rows per page',
+        previousPage: 'Previous page',
+        nextPage: 'Next page',
+        range: '{from}–{to} of {total}',
+      },
+    },
+  },
+} as const

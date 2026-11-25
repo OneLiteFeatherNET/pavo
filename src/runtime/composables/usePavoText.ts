@@ -1,11 +1,10 @@
 import { getCurrentInstance, unref, type MaybeRef } from 'vue'
-import de from '../locales/de.json'
-import en from '../locales/en.json'
+import { PAVO_TEXTS } from '../texts'
 
 type Params = Record<string, string | number>
 type Dictionary = Record<string, string>
 
-// Nested locale files ({ "pavo": { "close": "..." } }) flattened to dotted keys without the "pavo." prefix.
+// Nested texts ({ pavo: { close: "..." } }) flattened to dotted keys without the "pavo." prefix.
 function flatten(tree: Record<string, unknown>, prefix = ''): Dictionary {
   const out: Dictionary = {}
   for (const [key, value] of Object.entries(tree)) {
@@ -17,8 +16,8 @@ function flatten(tree: Record<string, unknown>, prefix = ''): Dictionary {
 }
 
 const DICTIONARIES: Record<string, Dictionary> = {
-  de: flatten((de as { pavo: Record<string, unknown> }).pavo),
-  en: flatten((en as { pavo: Record<string, unknown> }).pavo),
+  de: flatten(PAVO_TEXTS.de.pavo),
+  en: flatten(PAVO_TEXTS.en.pavo),
 }
 
 function interpolate(template: string, params?: Params): string {
@@ -27,14 +26,14 @@ function interpolate(template: string, params?: Params): string {
 }
 
 interface VueI18nLike {
-  te?: (key: string) => boolean
   t?: (key: string, params?: Params) => string
   locale?: MaybeRef<string>
 }
 
 /**
  * Translator for Pavo's built-in texts. Keys are written without the `pavo.` prefix (`t('close')`). Lookup order:
- * the app's vue-i18n when it has the `pavo.*` key, then the built-in dictionary for the current locale, then German.
+ * the app's vue-i18n translation of `pavo.*` when it returns a real text, then the built-in dictionary for the
+ * current locale, then German, then the key itself. `te` is not used: it reports false for precompiled messages.
  * Call it during setup; outside a component only the built-in dictionary is used.
  */
 export function usePavoText(): (key: string, params?: Params) => string {
@@ -43,8 +42,9 @@ export function usePavoText(): (key: string, params?: Params) => string {
   return (key: string, params?: Params): string => {
     const short = key.startsWith('pavo.') ? key.slice(5) : key
     const i18n = instance?.appContext.config.globalProperties.$i18n as VueI18nLike | undefined
-    if (i18n && typeof i18n.te === 'function' && typeof i18n.t === 'function' && i18n.te(`pavo.${short}`)) {
-      return i18n.t(`pavo.${short}`, params)
+    if (i18n && typeof i18n.t === 'function') {
+      const translated = i18n.t(`pavo.${short}`, params)
+      if (typeof translated === 'string' && translated !== '' && translated !== `pavo.${short}`) return translated
     }
     const locale = i18n?.locale !== undefined ? unref(i18n.locale) : 'de'
     const dictionary = DICTIONARIES[locale] ?? DICTIONARIES.de!
