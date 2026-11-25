@@ -10,7 +10,7 @@ export { usePavoText } from './composables/usePavoText'
 
 // Helpers
 export { iconPath, registerIcons } from './lib/icons'
-export { useLinkComponent } from './lib/link'
+export { PAVO_LINK, useLinkComponent } from './lib/link'
 export { parseTheme, resolveTheme, THEME_KEY } from './lib/theme'
 export type { ThemeName } from './lib/theme'
 export { TONE_CLASSES, TONE_ICONS, TONE_SOLID_CLASSES } from './lib/tones'
@@ -28,6 +28,12 @@ export type { NavEntry, Tone } from './lib/types'
 
 // Components: form fields and menus (TextField, Select, Switch, Menu, ...)
 
-// Components: navigation and data (NavDrawer, NavItem, TopAppBar, DataTable)
+// Components: navigation and data
+export { default as M3DataTable } from './components/DataTable.vue'
+export { default as M3NavDrawer } from './components/NavDrawer.vue'
+export { default as M3NavItem } from './components/NavItem.vue'
+export { default as M3TopAppBar } from './components/TopAppBar.vue'
+export type { Column as DataTableColumn } from './components/DataTable.vue'
+export type { TableLabels } from './lib/table-labels'
 
 // Components: layout (AppFrame, PageHeader, Problem, ConfirmDialog, StatusChip)

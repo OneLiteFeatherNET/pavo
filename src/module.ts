@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { addComponentsDir, addImports, createResolver, defineNuxtModule, resolvePath } from '@nuxt/kit'
+import { addComponentsDir, addImports, addPlugin, createResolver, defineNuxtModule, resolvePath } from '@nuxt/kit'
 import type { NuxtModule } from '@nuxt/schema'
 
 export interface ModuleOptions {
@@ -64,6 +64,9 @@ const pavoModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
         ],
       })
     })
+
+    // Nuxt does not register NuxtLink globally: the plugin provides it, so lib/link.ts can find it.
+    addPlugin(runtime('plugins/link'))
 
     if (options.fonts) {
       const weights = ['400', '500', '700'].map(weight => `@fontsource/roboto/${weight}.css`)
