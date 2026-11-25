@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/OneLiteFeatherNET/pavo/compare/v0.1.0...v0.2.0) (2026-11-25)
+
+
+### Features
+
+* **package:** export the problem helpers as their own entry ([#15](https://github.com/OneLiteFeatherNET/pavo/issues/15)) ([907b5a0](https://github.com/OneLiteFeatherNET/pavo/commit/907b5a02b0b079ed49adbe019cd335e851403db1))
+
+
+### Bug Fixes
+
+* **module:** register the locale files that the package ships ([#16](https://github.com/OneLiteFeatherNET/pavo/issues/16)) ([920b1ed](https://github.com/OneLiteFeatherNET/pavo/commit/920b1edcbffb6ff7430102d1b87b9669832f4c0b))
+
 ## 0.1.0 (2026-11-25)
 
 
