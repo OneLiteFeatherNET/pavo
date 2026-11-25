@@ -43,6 +43,7 @@
     "dev": "nuxi dev playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "prepack": "nuxt-module-build build",
+    "check:dist": "node scripts/check-dist.mjs",
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit && nuxi typecheck playground",
     "test": "vitest run --maxWorkers=2",
