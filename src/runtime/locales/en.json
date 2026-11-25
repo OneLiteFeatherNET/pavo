@@ -1,0 +1,27 @@
+{
+  "pavo": {
+    "close": "Close",
+    "menu": "Menu",
+    "navigation": "Navigation",
+    "skipToContent": "Skip to content",
+    "lightTheme": "Light theme",
+    "darkTheme": "Dark theme",
+    "language": "Switch language",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "loading": "Loading",
+    "noData": "Nothing here yet",
+    "problem": {
+      "network": "No connection to the API",
+      "title": "Something went wrong"
+    },
+    "table": {
+      "sortAscending": "Sort ascending",
+      "sortDescending": "Sort descending",
+      "rowsPerPage": "Rows per page",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "range": "{from}–{to} of {total}"
+    }
+  }
+}
