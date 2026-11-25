@@ -59,8 +59,8 @@ const pavoModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
       register({
         langDir: runtime('locales'),
         locales: [
-          { code: 'de', file: 'de.json' },
-          { code: 'en', file: 'en.json' },
+          { code: 'de', file: 'de.ts' },
+          { code: 'en', file: 'en.ts' },
         ],
       })
     })

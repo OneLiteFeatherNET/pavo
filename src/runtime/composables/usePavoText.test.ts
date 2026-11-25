@@ -36,33 +36,51 @@ describe('usePavoText', () => {
   it('uses the English dictionary for the English locale of the app', () => {
     const t = translatorIn({
       config: {
-        globalProperties: { $i18n: { te: () => false, locale: 'en' } },
+        globalProperties: { $i18n: { t: (key: string) => key, locale: 'en' } },
       },
     })
     expect(t('close')).toBe('Close')
   })
 
-  it('prefers the app translation when vue-i18n has the pavo key', () => {
+  it('uses the vue-i18n translation even when te reports the key as missing', () => {
     const t = translatorIn({
       config: {
         globalProperties: {
-          $i18n: {
-            te: (key: string) => key === 'pavo.close',
-            t: (key: string) => `app:${key}`,
-            locale: 'de',
-          },
+          $i18n: { te: () => false, t: () => 'Custom', locale: 'de' },
         },
       },
     })
-    expect(t('close')).toBe('app:pavo.close')
+    expect(t('close')).toBe('Custom')
   })
 
-  it('falls back to the built-in text when vue-i18n lacks the key', () => {
+  it('falls back to the built-in German text when vue-i18n returns the key unchanged', () => {
     const t = translatorIn({
       config: {
-        globalProperties: { $i18n: { te: () => false, locale: 'en' } },
+        globalProperties: {
+          $i18n: { t: (key: string) => key, locale: 'de' },
+        },
+      },
+    })
+    expect(t('close')).toBe('Schließen')
+  })
+
+  it('falls back to the built-in English text when vue-i18n returns the key unchanged', () => {
+    const t = translatorIn({
+      config: {
+        globalProperties: {
+          $i18n: { t: (key: string) => key, locale: 'en' },
+        },
       },
     })
     expect(t('noData')).toBe('Nothing here yet')
+  })
+
+  it('falls back to the built-in text when vue-i18n returns an empty string', () => {
+    const t = translatorIn({
+      config: {
+        globalProperties: { $i18n: { t: () => '', locale: 'de' } },
+      },
+    })
+    expect(t('close')).toBe('Schließen')
   })
 })
