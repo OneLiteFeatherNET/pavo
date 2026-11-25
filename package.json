@@ -1,6 +1,6 @@
 {
   "name": "@onelitefeathernet/pavo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "OneLiteFeather Material 3 library for Nuxt 4 and Vue 3, styled with Tailwind CSS v4",
   "license": "Apache-2.0",
   "type": "module",
