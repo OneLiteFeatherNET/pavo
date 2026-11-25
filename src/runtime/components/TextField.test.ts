@@ -53,6 +53,21 @@ describe('M3TextField', () => {
     expect(w.get('input').classes()).not.toContain('w-40')
   })
 
+  it('renders the placeholder that the app passes', () => {
+    const w = field({}, { placeholder: 'e.g. Steve' })
+    expect(w.get('input').attributes('placeholder')).toBe('e.g. Steve')
+  })
+
+  it('floats the label when the app passes a placeholder', () => {
+    const w = field({}, { placeholder: 'e.g. Steve' })
+    expect(w.get('label').classes()).toContain('top-0')
+    expect(w.get('label').classes()).not.toContain('top-7')
+  })
+
+  it('keeps a blank placeholder for the floating label without one', () => {
+    expect(field().get('input').attributes('placeholder')).toBe(' ')
+  })
+
   it('shows the counter', () => {
     expect(field({ modelValue: 'abcd', counter: 10 }).text()).toContain('4 / 10')
   })
